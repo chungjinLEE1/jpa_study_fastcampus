@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 //@Table(name="user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class Users extends BaseEntity implements Auditable {
+public class Users extends BaseEntity{
     @Id
     @GeneratedValue
     private Long id;
