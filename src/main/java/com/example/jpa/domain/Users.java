@@ -2,11 +2,9 @@ package com.example.jpa.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,9 +26,17 @@ public class Users {
     @Column(name="UPDATEDAT")
     private LocalDateTime updatedAt;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Address> address;
+
+    
+    
 
     public Users(@NonNull String name, @NonNull String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public Users(Object o, String podong, String s, LocalDateTime now, LocalDateTime now1) {
     }
 }
