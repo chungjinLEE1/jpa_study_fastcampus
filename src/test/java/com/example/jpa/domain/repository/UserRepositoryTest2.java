@@ -2,6 +2,7 @@ package com.example.jpa.domain.repository;
 
 import com.example.jpa.domain.Gender;
 import com.example.jpa.domain.Users;
+import com.example.jpa.repository.UserHistoryRepository;
 import com.example.jpa.repository.UserRepository;
 import org.assertj.core.util.Lists;
 import org.hibernate.criterion.Order;
@@ -23,6 +24,10 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 class UserRepositoryTest2 {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
+
 
 //    @Test
 //    void crud(){
@@ -135,4 +140,64 @@ class UserRepositoryTest2 {
 
         System.out.println(userRepository.findRawRecord().get("gender"));
     }
+
+    @Test
+    void listenerTest(){
+        Users user = new Users();
+        user.setEmail("martin@naver.com");
+        user.setName("martin");
+
+        userRepository.save(user);
+
+        Users user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("martiinnnnn");
+
+        userRepository.save(user2);
+
+        userRepository.deleteById(4L);
+
+    }
+
+
+    @Test
+    void prePersistTest(){
+        Users user = new Users();
+        user.setEmail("martin@naver.com");
+        user.setName("martin");
+        user.setCreatedAt(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
+
+        userRepository.save(user);
+
+        System.out.println(userRepository.findByEmail("martin@naver.com"));
+
+
+    }
+
+    @Test
+    void preUpdateTest(){
+        Users user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        System.out.println("as-is : " + user);
+
+        user.setName("martin22");
+        userRepository.save(user);
+
+        System.out.println("to-be : " + userRepository.findAll().get(0));
+
+    }
+
+    @Test
+    void userHistoryTest(){
+        Users user = new Users();
+        user.setEmail("martin@naver.com");
+        user.setName("martin");
+        userRepository.save(user);
+
+        user.setName("martin-new-new");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
 }
