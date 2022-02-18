@@ -1,5 +1,6 @@
 package com.example.jpa.domain.repository;
 
+import com.example.jpa.domain.Gender;
 import com.example.jpa.domain.Users;
 import com.example.jpa.repository.UserRepository;
 import org.assertj.core.util.Lists;
@@ -104,5 +105,34 @@ class UserRepositoryTest2 {
 
         System.out.println("findByName: " + userRepository.findByName("martin", PageRequest.of(0, 1, Sort.by((List<Sort.Order>) Order.desc("id")))));
 
+    }
+
+    @Test
+    void insertAndUpdateTest(){
+        Users user = new Users();
+        user.setName("martin");
+        user.setEmail("martin@naver.com");
+
+        userRepository.save(user);
+
+        Users user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("martintintintin");
+
+        userRepository.save(user2);
+
+    }
+
+
+    @Test
+    void enumTest(){
+        Users user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+
+        userRepository.findAll().forEach(System.out::println);
+
+
+        System.out.println(userRepository.findRawRecord().get("gender"));
     }
 }

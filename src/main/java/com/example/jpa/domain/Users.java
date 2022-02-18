@@ -12,6 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 @Entity(name ="users") // Entitiy는 반드시 pk가 필요하다.
+@Table(name="user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class Users {
     @Id
     @GeneratedValue
@@ -21,13 +22,20 @@ public class Users {
     private String name;
     @NonNull
     private String email;
-    @Column(name="CREATEDAT")
+
+    @Enumerated
+    private Gender gender;
+
+    @Column(name="CREATEDAT", updatable = false)
     private LocalDateTime createdAt;
-    @Column(name="UPDATEDAT")
+    @Column(name="UPDATEDAT", updatable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Address> address;
+//    @OneToMany(fetch = FetchType.EAGER)
+//    private List<Address> address;
+
+//    @Transient
+//    private String testData;
 
     
     
