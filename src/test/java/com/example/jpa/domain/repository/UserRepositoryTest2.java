@@ -23,10 +23,10 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 @SpringBootTest
 class UserRepositoryTest2 {
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository2;
 
     @Autowired
-    private UserHistoryRepository userHistoryRepository;
+    private UserHistoryRepository userHistoryRepository2;
 
 
 //    @Test
